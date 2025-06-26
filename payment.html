@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Gateway - Virgoun Surat Cinta Untuk Starla</title>
+    <style>
+        :root {
+            --primary: #ff4d7d;
+            --secondary: #ff8a5b;
+            --accent: #2bd2ff;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--dark), #16213e);
+            color: var(--light);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            animation: gradientShift 15s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            width: 90%;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            text-align: center;
+            transform: translateY(0);
+            transition: transform 0.5s ease;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,77,125,0.1) 0%, rgba(0,0,0,0) 70%);
+            z-index: -1;
+            animation: pulse 8s linear infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 0.2; }
+            100% { transform: scale(0.8); opacity: 0.5; }
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 25px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: textGlow 2s ease-in-out infinite alternate;
+            position: relative;
+            display: inline-block;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 3px;
+        }
+
+        @keyframes textGlow {
+            from { text-shadow: 0 0 5px rgba(255, 77, 125, 0.5); }
+            to { text-shadow: 0 0 15px rgba(255, 77, 125, 0.8), 0 0 25px rgba(255, 138, 91, 0.6); }
+        }
+
+        .payment-method {
+            margin: 25px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .payment-method::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: 0.5s;
+        }
+
+        .payment-method:hover::before {
+            left: 100%;
+        }
+
+        .payment-method:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .payment-method h2 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .dana-number {
+            font-size: 22px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            color: #06d6a0;
+            margin: 15px 0;
+            padding: 12px;
+            background: rgba(6, 214, 160, 0.1);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(6, 214, 160, 0.3);
+            position: relative;
+        }
+
+        .dana-number:hover {
+            background: rgba(6, 214, 160, 0.2);
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(6, 214, 160, 0.2);
+        }
+
+        .dana-number::before {
+            content: 'DANA';
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            background: var(--dark);
+            color: #06d6a0;
+            font-size: 12px;
+            padding: 0 8px;
+            border-radius: 10px;
+            border: 1px solid rgba(6, 214, 160, 0.3);
+        }
+
+        .atas-nama {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        .qris-container {
+            margin: 20px auto;
+            width: 220px;
+            height: 220px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+        }
+
+        .qris-container::before {
+            content: 'QRIS';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--dark);
+            color: var(--accent);
+            font-size: 12px;
+            padding: 0 10px;
+            border-radius: 10px;
+            border: 1px solid rgba(43, 210, 255, 0.3);
+            z-index: 2;
+        }
+
+        .qris-container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            border-color: rgba(43, 210, 255, 0.5);
+        }
+
+        .qris-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .music-info {
+            margin-top: 25px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .floating-hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff4d7d"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') no-repeat center center;
+            opacity: 0;
+            animation: float 6s linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+                left: 10%;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+                left: 90%;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                width: 95%;
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .dana-number {
+                font-size: 18px;
+                padding: 10px;
+            }
+            
+            .qris-container {
+                width: 180px;
+                height: 180px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="floating-hearts" id="heartsContainer"></div>
+    
+    <div class="container">
+        <h1>Payment Gateway</h1>
+        
+        <div class="payment-method">
+            <h2><i class="fas fa-wallet"></i> Transfer via DANA</h2>
+            <div class="dana-number">08817680325</div>
+            <div class="atas-nama">Atas Nama: S***** A***</div>
+        </div>
+        
+        <div class="payment-method">
+            <h2><i class="fas fa-qrcode"></i> Scan QRIS</h2>
+            <div class="qris-container">
+                <img src="https://ar-hosting.pages.dev/1749399734062.jpg" alt="QR Code Payment">
+            </div>
+            <div class="atas-nama">Atas Nama: V** S****</div>
+        </div>
+        
+        <div class="music-info">
+            <i class="fas fa-music"></i> Now Playing: Surat Cinta Untuk Starla - Virgoun
+        </div>
+    </div>
+
+    <audio id="bgMusic" autoplay loop>
+        <!-- Ganti dengan link langsung ke lagu "Surat Cinta Untuk Starla" -->
+        <source src="https://example.com/surat-cinta-untuk-starla.mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung elemen audio.
+    </audio>
+
+    <script>
+        // Fungsi untuk membuat hati yang mengambang
+        function createHearts() {
+            const heartsContainer = document.getElementById('heartsContainer');
+            const heartCount = 15;
+            
+            for (let i = 0; i < heartCount; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                
+                // Properti acak
+                const size = Math.random() * 15 + 10;
+                const delay = Math.random() * 5;
+                const duration = Math.random() * 3 + 5;
+                const left = Math.random() * 100;
+                
+                heart.style.width = `${size}px`;
+                heart.style.height = `${size}px`;
+                heart.style.animationDelay = `${delay}s`;
+                heart.style.animationDuration = `${duration}s`;
+                heart.style.left = `${left}%`;
+                
+                heartsContainer.appendChild(heart);
+            }
+        }
+        
+        // Memainkan musik otomatis saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', function() {
+            const bgMusic = document.getElementById('bgMusic');
+            
+            // Fungsi untuk handle autoplay policy
+            function handleAutoplay() {
+                const promise = bgMusic.play();
+                
+                if (promise !== undefined) {
+                    promise.catch(error => {
+                        // Autoplay prevented, show play button
+                        console.log('Autoplay prevented, showing play button');
+                        showPlayButton();
+                    });
+                }
+            }
+            
+            // Coba memainkan musik
+            handleAutoplay();
+            
+            // Buat efek hati
+            createHearts();
+            
+            // Tambahkan event listener untuk interaksi pertama
+            document.body.addEventListener('click', function firstInteraction() {
+                handleAutoplay();
+                document.body.removeEventListener('click', firstInteraction);
+            }, { once: true });
+        });
+        
+        function showPlayButton() {
+            const musicInfo = document.querySelector('.music-info');
+            if (musicInfo) {
+                musicInfo.innerHTML = `
+                    <button onclick="playMusic()" style="
+                        background: linear-gradient(90deg, var(--primary), var(--secondary));
+                        border: none;
+                        color: white;
+                        padding: 8px 15px;
+                        border-radius: 50px;
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                    ">
+                        <i class="fas fa-play"></i> Putar Musik
+                    </button>
+                `;
+            }
+        }
+        
+        function playMusic() {
+            const bgMusic = document.getElementById('bgMusic');
+            bgMusic.play();
+            
+            // Kembalikan ke tampilan semula
+            const musicInfo = document.querySelector('.music-info');
+            if (musicInfo) {
+                musicInfo.innerHTML = `
+                    <i class="fas fa-music"></i> Now Playing: Surat Cinta Untuk Starla - Virgoun
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
